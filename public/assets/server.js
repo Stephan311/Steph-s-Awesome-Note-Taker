@@ -1,12 +1,13 @@
 
 //installed package
 const express = require('express');
+const path = require('path');
 
 //create the express server
 const app = express();
 
 //the intial port
- const PORT = process.env.PORT || 4000;
+ const PORT = process.env.PORT || 4500;
 
  //Setup express app to handle data parsing
  app.use(express.urlencoded({ extended: true }));
@@ -18,21 +19,14 @@ const app = express();
  const jsonData = require('../../routes/db.json')
 
  //html routes
- app.get('/notes', (req, res) => {
-    // res.sendFile(path.join(__dirname, '../public/notes.html'))
-    res.send("hello my name is jeff");
-});
+ app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'notes.html')));
 
-app.get('*', (req, res) => {
-    // res.sendFile(path.join(__dirname, '../public/home.html'))
-    res.send(jsonData);
-});
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 //api routes
 
-app.get('/api/notes', (req, res) => res.json(notes));
+app.get('/api/notes', (req, res) => res.json(jsonData));
 
-res.json({jsonData});
 
 
 app.post('/api/notes', (req, res) => {
