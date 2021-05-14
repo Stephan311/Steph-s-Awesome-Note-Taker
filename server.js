@@ -1,12 +1,17 @@
 //installed package
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+
+
+const { v4: uuidv4 } = require('uuid');
+uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
 
 //create the express server
 const app = express();
 
 //the intial port
- const PORT = process.env.PORT || 4700;
+ const PORT = process.env.PORT || 4300;
 
  //Setup express app to handle data parsing
  app.use(express.urlencoded({ extended: true }));
@@ -15,7 +20,8 @@ const app = express();
 
  //get json data
 
- const jsonData = require('./db/db.json')
+ const jsonData = require('./db/db.json');
+// const { finished } = require('stream');
 
  //html routes
  app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, './public/notes.html')));
@@ -31,12 +37,23 @@ app.get('/api/notes', (req, res) => res.json(jsonData));
 app.post('/api/notes', (req, res) => {
     const newTask = req.body;
 
+    console.log(newTask);
+
     jsonData.push(newTask);
-
     res.json(newTask);
- 
+   
 
-})
+    var namesText = fs.readFileSync('./db/db.json');
+    var words = JSON.parse(namesText);
+    console.log(words);
+
+    // var data = JSON.stringify(newTask, null, 2);
+    fs.writeFile('./db/db.json', data, finisheddd)
+    function finisheddd(err) {
+        console.log("Done")
+    }
+    })
+
  
 
  //app lisneter
