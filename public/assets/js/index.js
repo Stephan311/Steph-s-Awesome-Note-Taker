@@ -4,6 +4,9 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
+// const { v4: uuidv4 } = require('uuid');
+// uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
+
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
@@ -68,6 +71,7 @@ const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
+    id: Math.random()
   };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
